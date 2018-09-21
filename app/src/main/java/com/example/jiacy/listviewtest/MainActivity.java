@@ -16,6 +16,7 @@ import org.w3c.dom.Text;
 class ViewHolder {
     TextView text1;
     TextView text2;
+    int tagId;
 }
 
 
@@ -38,17 +39,17 @@ public class MainActivity extends ListActivity {
                     viewHolder = new ViewHolder();
                     viewHolder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
                     viewHolder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-                    viewHolder.text1.setText("newing1" + tagId);
-                    viewHolder.text2.setText("newing2" + tagId);
+                    viewHolder.text1.setText("newing1+" + tagId);
+                    viewHolder.text2.setText("newing2+" + tagId);
+                    viewHolder.tagId = tagId;
                     tagId++;
                     Log.d("位置" + position, "创建新convertView,设置tagId:" + tagId);
                     convertView.setTag(viewHolder);
                 } else {
-//                    Log.d("位置" + position, convertView.getTag() + " 复用convertView");
                     viewHolder = (ViewHolder) convertView.getTag();
-                    viewHolder.text1.setText("reusing1");
-                    viewHolder.text2.setText("reusing2");
-
+                    Log.d("位置" + position, viewHolder.tagId + " 复用convertView");
+                    viewHolder.text1.setText("reusing1+" + viewHolder.tagId);
+                    viewHolder.text2.setText("reusing2+" + viewHolder.tagId);
                 }
 
                 return convertView;
