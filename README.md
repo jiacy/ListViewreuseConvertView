@@ -13,3 +13,5 @@ convertView发生作用的地方，就是当listview向上/向下滑动过程中
 
 ## 【步骤二】基于ViewHolder技术提升Android ListView中的item view加载效率
 ### 【参考】https://blog.csdn.net/zhangphil/article/details/44779723
+因为在findViewById的时候是一个IO操作，比较耗时，所以增加viewholder来提升性能
+ViewHolder不是Android的开发API，而是一种设计方法，就是设计个静态类，缓存一下
