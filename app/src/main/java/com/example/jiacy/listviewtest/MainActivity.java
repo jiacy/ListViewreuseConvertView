@@ -11,6 +11,13 @@ import android.widget.TextView;
 import android.view.View;
 import android.util.Log;
 
+import org.w3c.dom.Text;
+
+class ViewHolder {
+    TextView text1;
+    TextView text2;
+}
+
 
 public class MainActivity extends ListActivity {
     private int tagId = 0;
@@ -20,29 +27,29 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         ArrayAdapter mAdapter = new ArrayAdapter(this, 0) {
-            private TextView text1;
-            private TextView text2;
 
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                ViewHolder viewHolder;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_2, null);
                     //convertView.setMinimumHeight(400);
-
+                    viewHolder = new ViewHolder();
+                    viewHolder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                    viewHolder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+                    viewHolder.text1.setText("newing1" + tagId);
+                    viewHolder.text2.setText("newing2" + tagId);
+                    tagId++;
                     Log.d("位置" + position, "创建新convertView,设置tagId:" + tagId);
-                    convertView.setTag(tagId++);
+                    convertView.setTag(viewHolder);
                 } else {
-                    Log.d("位置" + position, convertView.getTag() + " 复用convertView");
+//                    Log.d("位置" + position, convertView.getTag() + " 复用convertView");
+                    viewHolder = (ViewHolder) convertView.getTag();
+                    viewHolder.text1.setText("reusing1");
+                    viewHolder.text2.setText("reusing2");
+
                 }
-
-                text1 = convertView.findViewById(android.R.id.text1);
-                text1.setTextColor(getResources().getColor(android.R.color.holo_blue_bright));
-                text1.setText(getItem(position));
-
-                text2 = convertView.findViewById(android.R.id.text2);
-                text2.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-                text2.setText("convertView tagId:" + String.valueOf(convertView.getTag()));
 
                 return convertView;
             }
